@@ -1,3 +1,8 @@
+
+body {
+  background-color: #d8e4d8;
+}
+
 .header {
   position: fixed;
   z-index: 20;
@@ -10,4 +15,45 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.header img {
+  width: 5rem;
+}
+
+.main-produtos {
+  max-width: 90rem;
+  margin: 12rem auto 5rem;
+}
+
+.grid-produtos {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.25rem;
+  row-gap: 6.4375rem;
+  margin-top: 2rem;
+}
+
+.grid-produtos .card-produto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  cursor: pointer;
+}
+
+.card-produto .card-produto-content-image {
+  overflow: hidden;
+}
+
+.card-produto .card-produto-content-image img {
+  transition: all 300ms;
+}
+
+.card-produto .card-produto-content-image:hover img {
+  transform: scale(1.1);
+}
+
+.card-produto-titulo {
+  font-size: 1.25rem;
+  font-weight: 600;
 }
