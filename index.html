@@ -12,6 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="shortcut icon" href="./assets/imgs/logo.png" type="image/x-icon">
   
   <title>Gama Alimentos</title>
 
@@ -21,30 +23,143 @@
     <figure>
       <img src="./assets/imgs/logo.png" alt="GAMA ALIMENTOS">
     </figure>
+
+    <nav>
+      <ul class="nav-links">
+        <li><a class="font-regular" href="#folhas">Folhas</a></li>
+        <li><a class="font-regular" href="#legumes">Legumes</a></li>
+        <li><a class="font-regular" href="#temperos">Temperos</a></li>
+        <li><a class="font-regular" href="#aromaticas">Aromáticas</a></li>
+        <li><a class="font-regular" href="#frutas">Frutas</a></li>
+      </ul>
+    </nav>
   </header>
 
   <main class="main-produtos">
 
-    <div class="grid-produtos">
-      <div class="card-produto">
+    <h1 class="titulo">Folhas</h1>
+
+    <section id="folhas" class="grid-produtos">
+      <!-- ALFACE -->
+      <div class="card-produto" data-nome="Alface" data-preco="9.00">
         <div class="card-produto-content-image">
             <figure>
-                <img src="./assets/imgs/alface.png" alt="Grow Collagen Skin Care Essential Cranberry 250g">
+                <img src="./assets/imgs/folhas/alface.png" alt="Alface (americana, crespa, roxa)">
             </figure>
         </div>
-        <p class="card-produto-titulo">
-          Alface
-        </p>
-        <p class="card-produto-categoria">
-          Maço
-        </p>
-        <p class="font-bold">
-          R$ 9,00
-        </p>
-
+        <p class="card-produto-titulo">Alface (americana, crespa, roxa)</p>
+        <p class="card-produto-categoria">Maço</p>
+        <p class="card-produto-preco">R$ 9,00</p>
+        
+        <div class="quantidade-produto">
+          <button onclick="diminuirQuantidade(this)">-</button>
+          <input type="text" value="0" class="quantidade" readonly>
+          <button onclick="aumentarQuantidade(this)">+</button>
+        </div>
       </div>
-    </div>
+
+      <!-- RÚCULA -->
+      <div class="card-produto" data-nome="Rúcula" data-preco="8.00">
+        <div class="card-produto-content-image">
+            <figure>
+                <img src="./assets/imgs/folhas/rucula.png" alt="Rúcula">
+            </figure>
+        </div>
+        <p class="card-produto-titulo">Rúcula</p>
+        <p class="card-produto-categoria">Maço</p>
+        <p class="card-produto-preco">R$ 8,00</p>
+
+        <div class="quantidade-produto">
+          <button onclick="diminuirQuantidade(this)">-</button>
+          <input type="text" value="0" class="quantidade" readonly>
+          <button onclick="aumentarQuantidade(this)">+</button>
+        </div>
+      </div>
+
+      <!-- ALMEIRÃO -->
+      <div class="card-produto" data-nome="Almeirão" data-preco="8.00">
+        <div class="card-produto-content-image">
+            <figure>
+                <img src="./assets/imgs/folhas/almeirao.png" alt="Almeirão">
+            </figure>
+        </div>
+        <p class="card-produto-titulo">Almeirão</p>
+        <p class="card-produto-categoria">Maço</p>
+        <p class="card-produto-preco">R$ 8,00</p>
+
+        <div class="quantidade-produto">
+          <button onclick="diminuirQuantidade(this)">-</button>
+          <input type="text" value="0" class="quantidade" readonly>
+          <button onclick="aumentarQuantidade(this)">+</button>
+        </div>
+      </div>
+
+      <!-- COUVE -->
+      <div class="card-produto" data-nome="Couve" data-preco="7.00">
+        <div class="card-produto-content-image">
+            <figure>
+                <img src="./assets/imgs/folhas/couve.png" alt="Couve">
+            </figure>
+        </div>
+        <p class="card-produto-titulo">Couve</p>
+        <p class="card-produto-categoria">Maço</p>
+        <p class="card-produto-preco">R$ 7,00</p>
+
+        <div class="quantidade-produto">
+          <button onclick="diminuirQuantidade(this)">-</button>
+          <input type="text" value="0" class="quantidade" readonly>
+          <button onclick="aumentarQuantidade(this)">+</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Botão Fazer Pedido -->
+
+    
+    <button class="btn-fazer-pedido" onclick="fazerPedido()">Fazer Pedido</button>
 
   </main>
+
+  <script>
+    function aumentarQuantidade(element) {
+      let input = element.previousElementSibling;
+      let valor = parseInt(input.value);
+      input.value = valor + 1;
+    }
+
+    function diminuirQuantidade(element) {
+      let input = element.nextElementSibling;
+      let valor = parseInt(input.value);
+      if (valor > 0) {
+        input.value = valor - 1;
+      }
+    }
+
+    function fazerPedido() {
+      const cards = document.querySelectorAll('.card-produto');
+      let mensagem = '*Pedido Gama Alimentos*\n\n';
+      let total = 0;
+
+      cards.forEach(card => {
+        const nome = card.getAttribute('data-nome');
+        const preco = parseFloat(card.getAttribute('data-preco'));
+        const quantidade = parseInt(card.querySelector('.quantidade').value);
+
+        if (quantidade > 0) {
+          const subtotal = preco * quantidade;
+          total += subtotal;
+          mensagem += `${nome} --- ${quantidade} x ${preco.toFixed(2)} --- ${subtotal.toFixed(2)}\n`;
+        }
+      });
+
+      mensagem += `\n*TOTAL --------- R$ ${total.toFixed(2)}*`;
+
+      const numeroWhatsApp = '+5516997890074';
+      const url = `https://api.whatsapp.com/send?phone=${numeroWhatsApp}&text=${encodeURIComponent(mensagem)}`;
+
+      window.open(url, '_blank');
+    }
+  </script>
+
 </body>
 </html>
